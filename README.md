@@ -51,6 +51,27 @@ $sms->to($phonenumber)
     ->send(); // Sending the request
 ```
 
+Send same message to many recipients
+```php
+use Eeappdev\SveveSms;
+$sms = new Sms();
+$sms->to(['1234567', '154342342'])
+    ->message('This message will be sent to both recipients') // Write your message
+    ->send(); // Sending the request
+```
+
+Send different messages, to different recipients
+```php
+use Eeappdev\SveveSms;
+$sms = new Sms();
+$sms->to([
+        '1234567', 
+        '154342342'
+    ])
+    ->message('This message will be sent to both recipients') // Write your message
+    ->send(); // Sending the request
+```
+
 Check remaining SMS
 ```php
 use Eeappdev\SveveSms;

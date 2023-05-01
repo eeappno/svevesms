@@ -1,0 +1,26 @@
+{
+    "name": "eeappdev/svevesms",
+    "description": "Sveve SMS API handler",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Eeappdev\\SveveSms\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Eeappdev\\SveveSms\\SmsServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "Emil Enevoldsen",
+            "email": "github@eeapp.no"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

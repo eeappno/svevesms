@@ -16,9 +16,9 @@ class Sms
     protected $response;
     protected $from;
 
-    public function __construct(Client $client)
+    public function __construct()
     {
-        $this->client = $client;
+        $this->client = new Client();
 
         $this->user = config('sveve.user');
         $this->password = config('sveve.password');

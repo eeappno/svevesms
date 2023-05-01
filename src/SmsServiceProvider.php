@@ -12,9 +12,6 @@ class SmsServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(Sms::class, function ($app) {
-            return new Sms($app->make('GuzzleHttp\Client'));
-        });
 
         $this->mergeConfigFrom(__DIR__.'/../config/sveve.php', 'sveve');
     }

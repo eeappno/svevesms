@@ -10,11 +10,13 @@ class Sms
     protected $user;
     protected $password;
     protected $url;
-    protected $recipient;
-    protected $message;
-    protected $test = false;
-    protected $response;
     protected $from;
+
+    protected $recipients = [];
+    protected $messages = [];
+    protected $response;
+
+    protected $test = false;
 
     public function __construct()
     {
@@ -26,9 +28,14 @@ class Sms
         $this->from = config('sveve.from');
     }
 
-    public function to(string $recipient): self
+    public function to(string|array $recipients): self
     {
-        $this->recipient = $recipient;
+        if (is_array($recipients)) {
+            $this->recipients = $recipients;
+        } else {
+            $this->recipients[] = $recipients;
+        }
+
         return $this;
     }
 
@@ -38,14 +45,31 @@ class Sms
         return $this;
     }
 
-    public function message($message): self
+    public function message(string|array $messages): self
     {
-        $this->message = $message;
+        if (is_array($messages)) {
+            $this->messages = $messages;
+        } else {
+            $this->messages[] = $messages;
+        }
+
         return $this;
     }
 
     public function send()
     {
+        $messages = [];
+
+        foreach ($this->recipients as $index => $recipient) {
+            $message = isset($this->messages[$index]) ? $this->messages[$index] : $this->messages[0];
+
+            $messages[] = [
+                'to' => $recipient,
+                'msg' => $message,
+                'from' => $this->from,
+            ];
+        }
+
         $response = $this->client->post($this->url . 'SendMessage', [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -54,9 +78,7 @@ class Sms
             'json' => [
                 'user' => $this->user,
                 'passwd' => $this->password,
-                'to' => $this->recipient,
-                'msg' => $this->message,
-                'from' => $this->from,
+                'messages' => $messages,
                 'f' => 'json',
                 'test' => $this->test ?? false,
             ],

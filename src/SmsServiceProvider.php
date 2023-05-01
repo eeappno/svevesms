@@ -3,7 +3,6 @@
 namespace Eeappdev\SveveSms;
 
 use Illuminate\Support\ServiceProvider;
-use Eeappdev\SveveSms\Sms;
 
 class SmsServiceProvider extends ServiceProvider
 {
@@ -12,7 +11,6 @@ class SmsServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-
         $this->mergeConfigFrom(__DIR__.'/../config/sveve.php', 'sveve');
     }
 
